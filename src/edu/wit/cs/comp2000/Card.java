@@ -40,11 +40,21 @@ public class Card implements Comparable<Card> {
 			return 2;
 		}
 	}
-	
+
 	@Override
 	public String toString() {
 		// call name
 		return this.name;
+	}
+
+	public int getValue() {
+		// return value
+		return this.value;
+	}
+
+	public String getSuit() {
+		// return suit of card object
+		return this.suit;
 	}
 
 	/**
@@ -52,9 +62,9 @@ public class Card implements Comparable<Card> {
 	 */
 	public static void main(String[] args) {
 		// test card
-		//Card test = new Card(Rank.ACE, Suit.CLUBS);
+		// Card test = new Card(Rank.ACE, Suit.CLUBS);
 		// test print
-		//System.out.printf("%s", test.toString());
+		// System.out.printf("%s", test.toString());
 
 	}
 

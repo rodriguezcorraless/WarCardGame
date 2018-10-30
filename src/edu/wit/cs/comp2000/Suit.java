@@ -13,7 +13,6 @@ package edu.wit.cs.comp2000;
 
 public enum Suit implements Comparable<Suit> {
 	//Element       Display Name    Graphic     Color      Priority
-	NONE        (   "",             "",         "",         0 ),
 	CLUBS       (   "Clubs",        "♣",        "black",    1 ),
 	DIAMONDS    (   "Diamonds",     "♦",        "red",      3 ),
 	HEARTS      (   "Hearts",       "♥",        "red",      2 ),
