@@ -68,7 +68,7 @@ public class War {
 				// needs to be implemented
 				// for now ignore
 				player1.getHand().remove(player1.getHand().getTop());
-				player2.getHand().remove(player1.getHand().getTop());
+				player2.getHand().remove(player2.getHand().getTop());
 			}
 
 			// used for validation of how many cards a player has left
