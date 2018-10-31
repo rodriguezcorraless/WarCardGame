@@ -31,13 +31,13 @@ public class Card implements Comparable<Card> {
 	public int compareTo(Card o) {
 		// card is smaller = 0
 		if (o.value > this.value) {
-			return 0;
+			return -1;
 		} else if (o.value < this.value) {
 			// card is bigger
 			return 1;
 		} else {
 			// cards are the same
-			return 2;
+			return 0;
 		}
 	}
 
