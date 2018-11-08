@@ -119,7 +119,7 @@ public class Pile {
 	public void splitInHalf(Hand h1, Hand h2) {
 		// split pile into two even piles
 		h1.addAll(new ArrayList<Card>(cards.subList(0, cards.size() / 2)));
-		h2.addAll(new ArrayList<Card>(cards.subList((cards.size() / 2), cards.size())));
+		h2.addAll(new ArrayList<Card>(cards.subList(cards.size() / 2, cards.size())));
 	}
 
 	/**
@@ -130,6 +130,7 @@ public class Pile {
 		//shuffle array list
 		Collections.shuffle(cards);
 	}
+	
 
 	/**
 	 * @param args

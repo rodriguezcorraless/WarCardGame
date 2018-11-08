@@ -65,10 +65,7 @@ public class War {
 			} else if (playValue == -1) {
 				judge.winningMove(player2, player1);
 			} else {
-				// needs to be implemented
-				// for now ignore
-				player1.getHand().remove(player1.getHand().getTop());
-				player2.getHand().remove(player2.getHand().getTop());
+				judge.war(player1, player2);
 			}
 
 			// used for validation of how many cards a player has left
@@ -80,17 +77,13 @@ public class War {
 			// if player1 has no more cards in their main hand, add their winnings to their
 			// hand.
 			if (player1.runOut()) {
-				player1.getWinnings().shuffle();
-				player1.getHand().addAll(player1.getWinnings().getList());
-				player1.getWinnings().reset();
+				player1.fillHand();
 			}
 
 			// if player2 has no more cards in their main hand, add their winnings to their
 			// hand.
 			if (player2.runOut()) {
-				player2.getWinnings().shuffle();
-				player2.getHand().addAll(player2.getWinnings().getList());
-				player2.getWinnings().reset();
+				player2.fillHand();
 			}
 
 			// check for loss condition, set playing = false, end play
