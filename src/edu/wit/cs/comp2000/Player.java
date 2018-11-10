@@ -152,6 +152,29 @@ public class Player {
 		p2.fillHand();
 	
 			for (int i = 2; i < (lessCards(p1, p2).getHand().getList().size()) && (play == true); i = i + 2) {
+				
+				
+				if (p1.notEnoughForWar() || p2.notEnoughForWar()) {
+					if (p1.notEnoughForWar()) {
+						System.out.printf("Player 1 has not enough for War!%n");
+						p1.getHand().reset();
+						p1.getWinnings().reset();
+						if(p1.notEnoughForWar()) {
+							System.out.println("Player 2 wins");
+						System.exit(1);
+						}
+					} else {
+						System.out.printf("Player 2 has not enough for War!%n");
+						p2.getHand().reset();
+						p2.getWinnings().reset();
+						if(p2.notEnoughForWar()) {
+							System.out.println("Player 1 wins");
+							System.exit(1);
+						}
+					}
+				
+		}
+				
 				if (determineWinner(p1, p2, i) == 1) {
 					System.out.printf("Player 1a plays: %s%n", p1.getHand().getList().get(i));
 					System.out.printf("Player 2 plays: %s%n", p2.getHand().getList().get(i));
@@ -165,21 +188,10 @@ public class Player {
 					play=false;
 					//warWon = true;
 				} else {
-					
-						if (p1.notEnoughForWar() || p2.notEnoughForWar()) {
-							if (p1.notEnoughForWar()) {
-								System.out.printf("Player 1 has not enough for War!%n");
-								p1.getHand().reset();
-								p1.getWinnings().reset();
-								
-							} else {
-								System.out.printf("Player 2 has not enough for War!%n");
-								p2.getHand().reset();
-								p2.getWinnings().reset();
-								
-							}
-						}
+					play = true;
 				}
+					
+				
 				
 			}
 
