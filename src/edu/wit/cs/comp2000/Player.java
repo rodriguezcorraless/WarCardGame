@@ -90,7 +90,7 @@ public class Player {
 
 	public boolean notEnoughForWar() {
 		return (hand.getList().size() + winnings.getList().size()) < 3;
-	}
+	}//winning.getlist.size =0
 
 	/**
 	 * A player has lost if both of their hands are empty.
@@ -148,55 +148,49 @@ public class Player {
 	public void war(Player p1, Player p2) {
 		boolean play = true;
 		boolean warWon = false;
-
-		while (play = true) {
-			p1.fillHand();
-			p2.fillHand();
-
-			if (p1.notEnoughForWar() || p2.notEnoughForWar()) {
-				if (p1.notEnoughForWar()) {
-					System.out.printf("Player 1 has not enough for War!%n");
-					p1.getHand().reset();
-					p1.getWinnings().reset();
-				} else {
-					System.out.printf("Player 2 has not enough for War!%n");
-					p2.getHand().reset();
-					p2.getWinnings().reset();
-				}
-			}
-			
-			
-			
-			
-			for (int i = 2; i < lessCards(p1, p2).getHand().getList().size(); i = i + 2) {
+		p1.fillHand();
+		p2.fillHand();
+	
+			for (int i = 2; i < (lessCards(p1, p2).getHand().getList().size()) && (play == true); i = i + 2) {
 				if (determineWinner(p1, p2, i) == 1) {
-					System.out.printf("Player 1 plays: %s%n", p1.getHand().getList().get(i));
+					System.out.printf("Player 1a plays: %s%n", p1.getHand().getList().get(i));
 					System.out.printf("Player 2 plays: %s%n", p2.getHand().getList().get(i));
 					winningMove(p1, p2, i);
-					warWon = true;
+					play=false;
+					//warWon = true;
 				} else if (determineWinner(p1, p2, i) == -1) {
-					System.out.printf("Player 1 plays: %s%n", p1.getHand().getList().get(i));
+					System.out.printf("Player 1b plays: %s%n", p1.getHand().getList().get(i));
 					System.out.printf("Player 2 plays: %s%n", p2.getHand().getList().get(i));
 					winningMove(p2, p1, i);
-					warWon = true;
-					break;
+					play=false;
+					//warWon = true;
 				} else {
-					play = true;
+					
+						if (p1.notEnoughForWar() || p2.notEnoughForWar()) {
+							if (p1.notEnoughForWar()) {
+								System.out.printf("Player 1 has not enough for War!%n");
+								p1.getHand().reset();
+								p1.getWinnings().reset();
+								
+							} else {
+								System.out.printf("Player 2 has not enough for War!%n");
+								p2.getHand().reset();
+								p2.getWinnings().reset();
+								
+							}
+						}
 				}
 				
-				if(warWon = true) {
-					break;
-				}
 			}
 
-			if (warWon = true) {
+			/*if (warWon = true) {
 				play = false;
-			}
+			}*/
 			// System.out.printf("war card is: %s%n", p1.getHand().getTop().toString());
 			// System.out.printf("war card is: %s%n", p2.getHand().getTop().toString());
 		}
 
-	}
+	
 
 	/**
 	 * @param args
