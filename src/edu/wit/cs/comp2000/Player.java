@@ -63,9 +63,12 @@ public class Player {
 	 * when their is war.
 	 * 
 	 * @param p1
+	 *            Player 1
 	 * @param p2
+	 *            Player 2
 	 * @param i
-	 * @return
+	 *            index to determinewinner
+	 * @return 1, 0, -1, depending on the comparision
 	 */
 	private int determineWinner(Player p1, Player p2, int i) {
 		return p1.getHand().getList().get(i).compareTo(p2.getHand().getList().get(i));
@@ -192,15 +195,22 @@ public class Player {
 	 *            Player 2
 	 */
 	public void war(Player p1, Player p2) {
+		// print
 		System.out.printf("%n");
 		System.out.printf("War!%n");
 		System.out.printf("%n");
+
+		// boolean to check if the play is over
 		boolean play = true;
+
+		// fill hands to avoid errors
 		p1.fillHand();
 		p2.fillHand();
 
+		// loop in case there is multiple war
 		for (int i = 2; i < (lessCards(p1, p2).getHand().getList().size()) && (play == true); i = i + 2) {
 
+			// check if a player does not have enough for war.
 			if (p1.notEnoughForWar() || p2.notEnoughForWar()) {
 				if (p1.notEnoughForWar()) {
 					System.out.printf("%s does not have enough cards for War!%n", p1.getName());
@@ -222,18 +232,21 @@ public class Player {
 
 			}
 
+			// determining who won based on what someone played during war
 			if (determineWinner(p1, p2, i) == 1) {
 				System.out.printf("%s plays: %s%n", p1.getName(), p1.getHand().getList().get(i));
 				System.out.printf("%s plays: %s%n", p2.getName(), p2.getHand().getList().get(i));
 				winningMove(p1, p2, i);
+				// play is over
 				play = false;
-				// warWon = true;
 			} else if (determineWinner(p1, p2, i) == -1) {
 				System.out.printf("%s plays: %s%n", p1.getName(), p1.getHand().getList().get(i));
 				System.out.printf("%s plays: %s%n", p2.getName(), p2.getHand().getList().get(i));
 				winningMove(p2, p1, i);
+				// play is over
 				play = false;
 			} else {
+				// continue to loop through
 				play = true;
 			}
 
