@@ -56,16 +56,4 @@ public class Card implements Comparable<Card> {
 		// return suit of card object
 		return this.suit;
 	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// test card
-		// Card test = new Card(Rank.ACE, Suit.CLUBS);
-		// test print
-		// System.out.printf("%s", test.toString());
-
-	}
-
 }

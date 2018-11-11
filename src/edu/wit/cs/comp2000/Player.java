@@ -6,7 +6,7 @@ package edu.wit.cs.comp2000;
 import java.util.ArrayList;
 
 /**
- * @author
+ * @author Anthony & Sancho
  *
  */
 public class Player {
@@ -58,7 +58,16 @@ public class Player {
 		return p1.getHand().getTop().compareTo(p2.getHand().getTop());
 	}
 
-	public int determineWinner(Player p1, Player p2, int i) {
+	/**
+	 * Method used to determine the winner of a turn at a certain index. Used for
+	 * when their is war.
+	 * 
+	 * @param p1
+	 * @param p2
+	 * @param i
+	 * @return
+	 */
+	private int determineWinner(Player p1, Player p2, int i) {
 		return p1.getHand().getList().get(i).compareTo(p2.getHand().getList().get(i));
 	}
 
@@ -77,9 +86,21 @@ public class Player {
 		p1.winnings.add(p2.getHand().getTop());
 		p1.getHand().remove(p1.getHand().getTop());
 		p2.getHand().remove(p2.getHand().getTop());
+		System.out.printf("%s has won the round!%n", p1.getName());
 	}
 
-	public void winningMove(Player p1, Player p2, int i) {
+	/**
+	 * Unloads cards from one players hand to the other players hand. For uses with
+	 * winning hands in war
+	 * 
+	 * @param p1
+	 *            Player 1
+	 * @param p2
+	 *            Player 2
+	 * @param i
+	 *            index from where to start unloading cards
+	 */
+	private void winningMove(Player p1, Player p2, int i) {
 		for (int j = i; j >= 0; j--) {
 			p1.winnings.add(p1.getHand().getList().get(j));
 			p1.winnings.add(p2.getHand().getList().get(j));
@@ -88,9 +109,14 @@ public class Player {
 		}
 	}
 
-	public boolean notEnoughForWar() {
+	/**
+	 * Used to determine if a player does not have enough cards left to go to War
+	 * 
+	 * @return true or false depending if a player has less than 3
+	 */
+	private boolean notEnoughForWar() {
 		return (hand.getList().size() + winnings.getList().size()) < 3;
-	}//winning.getlist.size =0
+	}
 
 	/**
 	 * A player has lost if both of their hands are empty.
@@ -101,6 +127,9 @@ public class Player {
 		return hand.isEmpty() && winnings.isEmpty();
 	}
 
+	/**
+	 * Shuffles a players winnings and fills their main hand
+	 */
 	public void fillHand() {
 		winnings.shuffle();
 		hand.addAll(winnings.getList());
@@ -135,7 +164,16 @@ public class Player {
 		return name;
 	}
 
-	public Player lessCards(Player p1, Player p2) {
+	/**
+	 * Used to determine which player has less cards
+	 * 
+	 * @param p1
+	 *            Player 1
+	 * @param p2
+	 *            Player 2
+	 * @return return player with less cards
+	 */
+	private Player lessCards(Player p1, Player p2) {
 		if (p1.numOfCards() > p2.numOfCards()) {
 			return p1;
 		} else if (p2.numOfCards() > p1.numOfCards()) {
@@ -145,73 +183,61 @@ public class Player {
 		}
 	}
 
+	/**
+	 * Method used when two players are at War. conducts the war.
+	 * 
+	 * @param p1
+	 *            Player 1
+	 * @param p2
+	 *            Player 2
+	 */
 	public void war(Player p1, Player p2) {
+		System.out.printf("%n");
+		System.out.printf("War!%n");
+		System.out.printf("%n");
 		boolean play = true;
-		boolean warWon = false;
 		p1.fillHand();
 		p2.fillHand();
-	
-			for (int i = 2; i < (lessCards(p1, p2).getHand().getList().size()) && (play == true); i = i + 2) {
-				
-				
-				if (p1.notEnoughForWar() || p2.notEnoughForWar()) {
+
+		for (int i = 2; i < (lessCards(p1, p2).getHand().getList().size()) && (play == true); i = i + 2) {
+
+			if (p1.notEnoughForWar() || p2.notEnoughForWar()) {
+				if (p1.notEnoughForWar()) {
+					System.out.printf("%s does not have enough cards for War!%n", p1.getName());
+					p1.getHand().reset();
+					p1.getWinnings().reset();
 					if (p1.notEnoughForWar()) {
-						System.out.printf("Player 1 has not enough for War!%n");
-						p1.getHand().reset();
-						p1.getWinnings().reset();
-						if(p1.notEnoughForWar()) {
-							System.out.println("Player 2 wins");
+						System.out.printf("%s has lost!%n", p2.getName());
 						System.exit(1);
-						}
-					} else {
-						System.out.printf("Player 2 has not enough for War!%n");
-						p2.getHand().reset();
-						p2.getWinnings().reset();
-						if(p2.notEnoughForWar()) {
-							System.out.println("Player 1 wins");
-							System.exit(1);
-						}
 					}
-				
-		}
-				
-				if (determineWinner(p1, p2, i) == 1) {
-					System.out.printf("Player 1a plays: %s%n", p1.getHand().getList().get(i));
-					System.out.printf("Player 2 plays: %s%n", p2.getHand().getList().get(i));
-					winningMove(p1, p2, i);
-					play=false;
-					//warWon = true;
-				} else if (determineWinner(p1, p2, i) == -1) {
-					System.out.printf("Player 1b plays: %s%n", p1.getHand().getList().get(i));
-					System.out.printf("Player 2 plays: %s%n", p2.getHand().getList().get(i));
-					winningMove(p2, p1, i);
-					play=false;
-					//warWon = true;
 				} else {
-					play = true;
+					System.out.printf("%s does not have enough cards for War!%n", p2.getName());
+					p2.getHand().reset();
+					p2.getWinnings().reset();
+					if (p2.notEnoughForWar()) {
+						System.out.printf("%s has lost!%n", p1.getName());
+						System.exit(1);
+					}
 				}
-					
-				
-				
+
 			}
 
-			/*if (warWon = true) {
+			if (determineWinner(p1, p2, i) == 1) {
+				System.out.printf("%s plays: %s%n", p1.getName(), p1.getHand().getList().get(i));
+				System.out.printf("%s plays: %s%n", p2.getName(), p2.getHand().getList().get(i));
+				winningMove(p1, p2, i);
 				play = false;
-			}*/
-			// System.out.printf("war card is: %s%n", p1.getHand().getTop().toString());
-			// System.out.printf("war card is: %s%n", p2.getHand().getTop().toString());
+				// warWon = true;
+			} else if (determineWinner(p1, p2, i) == -1) {
+				System.out.printf("%s plays: %s%n", p1.getName(), p1.getHand().getList().get(i));
+				System.out.printf("%s plays: %s%n", p2.getName(), p2.getHand().getList().get(i));
+				winningMove(p2, p1, i);
+				play = false;
+			} else {
+				play = true;
+			}
+
 		}
-
-	
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		Player player1 = new Player("ok");
-		Player player2 = new Player("awesome");
-		Player player3 = new Player("cool");
-
 	}
 
 }

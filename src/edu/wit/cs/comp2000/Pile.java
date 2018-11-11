@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * @author Anthony and Sancho
+ * @author Anthony & Sancho
  *
  */
 public class Pile {
@@ -31,6 +31,15 @@ public class Pile {
 	 */
 	public ArrayList<Card> getList() {
 		return cards;
+	}
+
+	/**
+	 * Used to get name of a pile
+	 * 
+	 * @return name of pile
+	 */
+	public String getName() {
+		return name;
 	}
 
 	/**
@@ -94,7 +103,7 @@ public class Pile {
 	 * 
 	 * @return string containing the entire pile
 	 */
-	public String pileToString() {
+	private String pileToString() {
 		// create empty string builder
 		StringBuilder stringPile = new StringBuilder("");
 
@@ -127,17 +136,7 @@ public class Pile {
 	 * 
 	 */
 	public void shuffle() {
-		//shuffle array list
+		// shuffle array list
 		Collections.shuffle(cards);
 	}
-	
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

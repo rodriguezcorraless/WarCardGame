@@ -2,6 +2,11 @@ package edu.wit.cs.comp2000;
 
 import java.util.Scanner;
 
+/**
+ * 
+ * @author Anthony & Sancho
+ *
+ */
 public class War {
 	private static Deck deck;
 	private static Player player1;
@@ -16,6 +21,12 @@ public class War {
 	 * 
 	 */
 	private static void initialize() {
+		// EPIC WAR PRINT
+		System.out.printf("%n%n/ _ \\_/\\  / _ \\_/\\ /  \\    /  \\/  _  \\\\______   \\ / _ \\_/\\  / _ \\_/\\ \r\n"
+				+ " \\/ \\___/  \\/ \\___/ \\   \\/\\/   /  /_\\  \\|       _/ \\/ \\___/  \\/ \\___/ \r\n"
+				+ "                     \\        /    |    \\    |   \\                    \r\n"
+				+ "                      \\__/\\  /\\____|__  /____|_  /                    \r\n"
+				+ "                           \\/         \\/       \\/                     %n%n");
 		// create Deck
 		deck = new Deck("Main Deck");
 
@@ -26,6 +37,8 @@ public class War {
 		System.out.printf("What should we call Player 1?%n");
 		player1 = new Player(input.nextLine());
 
+		System.out.printf("%n");
+
 		// ask for player 2 name, create player 2
 		System.out.printf("What should we call Player 2?%n");
 		player2 = new Player(input.nextLine());
@@ -35,9 +48,6 @@ public class War {
 
 		// deal cards
 		deck.deal(player1, player2);
-
-		// close scanner
-		input.close();
 	}
 
 	/**
@@ -45,16 +55,41 @@ public class War {
 	 * 
 	 */
 	private static void play() {
-		// variable used for while loop
+		// main game loop boolean
 		boolean playing = true;
+		// boolean for turn
+		boolean turn = true;
+
+		System.out.printf("%n");
+
 		// game is started
 		System.out.printf("Let's get started!%n");
+		System.out.printf("Players must press enter to play their turn!%n");
+
+		System.out.printf("%n");
 
 		// while game is being played
 		while (playing == true) {
-			// plays top card of each players maind hand
-			System.out.printf("%s plays: %s%n", player1.getName(), player1.getHand().getTop());
-			System.out.printf("%s plays: %s%n", player2.getName(), player2.getHand().getTop());
+
+			// turn == true means it's the first players turn
+			if (turn == true) {
+				// require enter to play
+				turn(player1);
+				// plays top card of each players maind hand
+				System.out.printf("%s plays: %s%n", player1.getName(), player1.getHand().getTop());
+				// switch turnA
+				turn = false;
+			}
+
+			// turn == true means it's the first players turn
+			if (turn == false) {
+				// require enter to play
+				turn(player2);
+				// plays top card of each players maind hand
+				System.out.printf("%s plays: %s%n", player2.getName(), player2.getHand().getTop());
+				// switch turn
+				turn = true;
+			}
 
 			// judge determines winner based on comparing value of the two players hands
 			int playValue = judge.determineWinner(player1, player2);
@@ -89,33 +124,24 @@ public class War {
 			// check for loss condition, set playing = false, end play
 			if (player1.hasLost() || player2.hasLost()) {
 				if (player1.hasLost()) {
-					System.out.printf("%s has lost!%n", player1.getName());
+					System.out.printf("No more cards to play! %s has lost!%n", player1.getName());
 				} else {
-					System.out.printf("%s has lost!%n", player2.getName());
+					System.out.printf("No more cards to play! %s has lost!%n", player2.getName());
 				}
 				playing = false;
 			}
 		}
-		// call method to see if the player wants to play again
-		// goAhead();
 	}
 
-	/**
-	 * Broken! Scanner would not stop and wait for input! Going to be used to
-	 * determine if a player wants to go again!
+	/*
+	 * Method used to indicate players turn. Waits for enter to be pressed to
+	 * continue!
+	 * 
 	 */
-	public static void goAhead() {
-		Scanner input = new Scanner(System.in);
-		String response = "";
-		System.out.printf("Do you want to play again? Type Y to play again!%n");
-
-		if (response.equals("Y") || response.equals("y")) {
-			initialize();
-			play();
-		} else {
-			System.out.printf("Exiting!%n");
-			System.exit(0);
-		}
+	private static void turn(Player p) {
+		System.out.printf("%s it is your turn! Play your card!%n", p.getName());
+		Scanner enter = new Scanner(System.in);
+		enter.nextLine();
 	}
 
 	/**

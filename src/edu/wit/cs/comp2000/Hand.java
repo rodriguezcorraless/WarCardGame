@@ -4,7 +4,7 @@
 package edu.wit.cs.comp2000;
 
 /**
- * @author
+ * @author Anthony & Sancho
  *
  */
 public class Hand extends Pile {
@@ -17,21 +17,4 @@ public class Hand extends Pile {
 		super(name);
 
 	}
-
-	/**
-	 * Call to see if a hand is empty
-	 * 
-	 * @return whether or not the hand is empty based on if the pile is empty
-	 */
-	public boolean handIsEmpty() {
-		return isEmpty();
-	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-
-	}
-
 }
